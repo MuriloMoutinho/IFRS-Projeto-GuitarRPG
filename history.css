@@ -1,0 +1,24 @@
+.perfil{
+    position: fixed;
+    top: 2em;
+    right: 2em;
+
+    padding: 1em;
+    border-radius: 0.5em;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.historia{
+    position: fixed;
+    bottom: 2em;
+    right: 50%;
+    transform: translateX(50%);
+
+    width: 90%;
+
+    font-size: 1.2em;
+
+    padding: 1em;
+    border-radius: 0.5em;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}

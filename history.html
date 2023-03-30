@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="history.css">
     <title>Document</title>
 </head>
 <body>
@@ -11,12 +12,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
 
-    <div>Teachable Machine Image Model</div>
-<button type="button" onclick="init()">Start</button>
 
-<div id="webcam-container"></div>
-<div id="label-container"></div>
+<div class="perfil">
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <button onclick="init()">Iniciar câmera</button>
 
+    <div>
+        <div>Reputação</div>
+        <div>- || -</div>
+    </div>
+</div>
+
+
+<div class="historia">
+</div>
 
 <script type="text/javascript">
 
@@ -58,6 +68,15 @@
 
                 if(prediction[i].className === "Class 1" && prediction[i].probability.toFixed(2) == 1){
                     console.log("entrou na 1")
+                }
+                if(prediction[i].className === "Class 2" && prediction[i].probability.toFixed(2) == 1){
+                    console.log("entrou na 2")
+                }
+                if(prediction[i].className === "Class 3" && prediction[i].probability.toFixed(2) == 1){
+                    console.log("entrou na 3")
+                }
+                if(prediction[i].className === "default" && prediction[i].probability.toFixed(2) == 1){
+                    console.log("entrou na 4")
                 }
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
