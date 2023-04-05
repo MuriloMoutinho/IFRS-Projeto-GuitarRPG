@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="history.css" />
-    <title>Batalha</title>
-    <script src="../js/historys.js" defer></script>
+    <link rel="stylesheet" href="level5.css" />
+    <title>Level 5</title>
+    <script src="../../js/level5.js" defer></script>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -16,7 +16,27 @@
       <div class="jogador" id="jogador">
         <img
           src="https://cdnb.artstation.com/p/assets/images/images/020/153/631/original/robert-russell-idle-large.gif?1566587279"
-          alt=""
+          class="playerImage"
+        />
+        <img
+          src="../../assets/helth.gif"
+          class="healthPlayer hide"
+          id="healthPlayer"
+        />
+        <img
+          src="../../assets/especial.gif"
+          class="especialPlayer hide"
+          id="especialPlayer"
+        />
+        <img
+          src="../../assets/attack.gif"
+          class="attackPlayer hide"
+          id="attackPlayer"
+        />
+        <img
+          src="../../assets/shild.png"
+          class="defendingPlayer hide"
+          id="defendingPlayer"
         />
       </div>
 
@@ -35,7 +55,17 @@
         <div class="atributo vida">Vida<span id="life"></span></div>
         <div class="atributo situacao">Situação<span id="defend"></span></div>
         <div class="atributo especial">Especial<span id="especial"></span></div>
+        <div class="atributo cura">Curas<span id="curas"></span></div>
       </div>
+    </div>
+
+    <div class="background">
+      <img
+        class="background__image"
+        draggable="false"
+        src="http://www.bryanheemskerk.com/wp-content/uploads/2017/04/GiantSkeletonCleanSpriting2.gif"
+        alt="Background"
+      />
     </div>
   </body>
 </html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="level2.css" />
+    <title>Level 2</title>
+    <script src="../../js/level2.js" defer></script>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+    <div class="entidades">
+      <div class="jogador" id="jogador">
+        <img
+          src="https://cdnb.artstation.com/p/assets/images/images/020/153/631/original/robert-russell-idle-large.gif?1566587279"
+          class="playerImage"
+        />
+        <img
+          src="../../assets/helth.gif"
+          class="healthPlayer hide"
+          id="healthPlayer"
+        />
+        <img
+          src="../../assets/especial.gif"
+          class="especialPlayer hide"
+          id="especialPlayer"
+        />
+        <img
+          src="../../assets/attack.gif"
+          class="attackPlayer hide"
+          id="attackPlayer"
+        />
+        <img
+          src="../../assets/shild.png"
+          class="defendingPlayer hide"
+          id="defendingPlayer"
+        />
+      </div>
+
+      <div class="inimigos" id="inimigos"></div>
+    </div>
+
+    <div class="barra_jogador">
+      <div class="camera">
+        <div id="webcam-container"></div>
+        <div id="label-container"></div>
+        <button id="button-init" class="button">Iniciar câmera</button>
+      </div>
+
+      <div class="status_jogador">
+        <div class="atributo rodada">Rodada<span id="round"></span></div>
+        <div class="atributo vida">Vida<span id="life"></span></div>
+        <div class="atributo situacao">Situação<span id="defend"></span></div>
+        <div class="atributo especial">Especial<span id="especial"></span></div>
+        <div class="atributo cura">Curas<span id="curas"></span></div>
+      </div>
+    </div>
+
+    <div class="background">
+      <img
+        class="background__image"
+        draggable="false"
+        src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4fe85519-25ab-4e85-8641-9d11243cdeb7/ddyyk3r-204a6f3d-fe9b-4a74-95d3-e00732413c0a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzRmZTg1NTE5LTI1YWItNGU4NS04NjQxLTlkMTEyNDNjZGViN1wvZGR5eWszci0yMDRhNmYzZC1mZTliLTRhNzQtOTVkMy1lMDA3MzI0MTNjMGEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.91IvvGgnS_eii71ZLETu2vLVQ08JKDRCgY3PZb4-1bs"
+        alt="Background"
+      />
+    </div>
+  </body>
+</html>

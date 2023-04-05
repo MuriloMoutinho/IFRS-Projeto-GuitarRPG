@@ -1,4 +1,4 @@
-const URL = "https://teachablemachine.withgoogle.com/models/ME9WH8taA/";
+const URL = "https://teachablemachine.withgoogle.com/models/dF9XOLpF6/";
 
 const buttonInit = document.querySelector("#button-init");
 
@@ -16,7 +16,7 @@ async function init() {
   maxPredictions = model.getTotalClasses();
 
   const flip = true;
-  webcam = new tmImage.Webcam(150, 150, flip);
+  webcam = new tmImage.Webcam(126, 126, flip);
   await webcam.setup();
   await webcam.play();
   window.requestAnimationFrame(loop);
@@ -44,7 +44,11 @@ async function predict() {
       prediction[i].className === "Class 1" &&
       prediction[i].probability.toFixed(2) == 1
     ) {
-      await action(() => healthLife(player));
+      if (player.health.usage === 0) {
+        window.alert("voce não possui mais curas");
+      } else {
+        await action(() => healthLife(player));
+      }
     } else if (
       prediction[i].className === "Class 2" &&
       prediction[i].probability.toFixed(2) == 1
@@ -60,8 +64,9 @@ async function predict() {
       prediction[i].probability.toFixed(2) == 1
     ) {
       if (player.especial.usage === 0) {
-        await action(giveEspecial);
         window.alert("voce não possui mais especiais");
+      } else {
+        await action(giveEspecial);
       }
     }
 
@@ -77,56 +82,52 @@ function hideElement(element) {
 
 var player = {
   name: "Jogador",
-  damage: 7,
+  damage: 5,
   life: 30,
   especial: {
-    damage: 10,
-    usage: 2,
+    damage: 4,
+    usage: 3,
   },
-  powerHealth: 5,
+  health: {
+    usage: 3,
+    powerHealth: 5,
+  },
   defending: false,
 };
 
 var entitys = [
   {
-    name: "Slime",
-    damage: 7,
-    life: 10,
-    powerHealth: 5,
+    name: "Esqueleto",
+    damage: 2,
+    life: 15,
     defending: false,
     death: false,
     divInfos: {
-      id: "slime",
-      image:
-        "https://i.pinimg.com/originals/45/41/43/45414373211525c8c91d2fd8be5f23dc.gif",
-      imageId: "slimeImage",
+      image: "../../assets/skeleton.gif",
+      imageId: "esqueletoImage",
     },
   },
   {
-    name: "Goblin",
-    damage: 7,
-    life: 10,
-    powerHealth: 5,
-    defending: false,
-    death: false,
-    divInfos: {
-      id: "goblin",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTI4NTM0LzI3NTU1NzQuZ2lm/original/tRHLDs.gif",
-      imageId: "goblinImage",
-    },
-  },
-  {
-    name: "Orc",
-    damage: 7,
-    life: 10,
-    powerHealth: 5,
+    name: "Cavaleiro",
+    damage: 5,
+    life: 40,
     defending: false,
     death: false,
     divInfos: {
       image:
         "https://i.pinimg.com/originals/f1/46/5a/f1465a4549618c496cc67ae1cf827a17.gif",
-      imageId: "orcImage",
+      imageId: "cavaleiroImage",
+    },
+  },
+  {
+    name: "Slime",
+    damage: 1,
+    life: 10,
+    defending: false,
+    death: false,
+    divInfos: {
+      image: "../../assets/slime.gif",
+      imageId: "slimeImage",
     },
   },
 ];
@@ -140,8 +141,11 @@ async function giveDamege() {
   var enemy = entitysLifes[enemyIndex];
 
   jogadorDiv.classList.add("jogadorAtacando");
-
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  jogadorAtaqueDiv.classList.remove("hide");
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  jogadorAtaqueDiv.classList.add("hide");
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   jogadorDiv.classList.remove("jogadorAtacando");
 
   receivedDamege(enemy, player.damage);
@@ -149,22 +153,23 @@ async function giveDamege() {
 
 async function giveEspecial() {
   var entitysLifes = entitys.filter((entity) => !entity.death);
-  var enemyIndex = Math.floor(Math.random() * entitysLifes.length);
 
-  var enemy = entitysLifes[enemyIndex];
+  jogadorDiv.classList.add("jogadorEspecial");
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  jogadorEspecialDiv.classList.remove("hide");
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  jogadorEspecialDiv.classList.add("hide");
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  jogadorDiv.classList.remove("jogadorEspecial");
 
-  jogadorDiv.classList.add("jogadorAtacando");
-
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  jogadorDiv.classList.remove("jogadorAtacando");
-
-  if (enemy.defending) {
-    damegeReceived = player.especial.damage / 2;
-    enemy.defending = false;
-    enemy.life -= Math.round(damegeReceived);
-  } else {
-    enemy.life -= player.especial.damage;
-  }
+  entitysLifes.forEach((entity) => {
+    if (entity.defending) {
+      entity.life -= Math.round(player.especial.damage / 2);
+      entity.defending = false;
+    } else {
+      entity.life -= player.especial.damage;
+    }
+  });
   player.especial.usage--;
 }
 
@@ -179,7 +184,12 @@ function receivedDamege(entity, damege) {
 }
 
 async function healthLife(entity) {
-  entity.life += entity.powerHealth;
+  entity.life += entity.health.powerHealth;
+  entity.health.usage--;
+
+  jogadorCuraDiv.classList.remove("hide");
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  jogadorCuraDiv.classList.add("hide");
 }
 
 async function defend(entity) {
@@ -189,20 +199,20 @@ async function defend(entity) {
 //--------------------------------------------------------------------------------------------------
 
 async function runRoundEnemy() {
-  var actionIndex = Math.floor(Math.random() * 10);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  var actionIndex = Math.floor(Math.random() * 7);
 
   var entitysLifes = entitys.filter((entity) => !entity.death);
   var enemy = entitysLifes[roundEnemy];
 
-  if (actionIndex <= 5) {
+  if (actionIndex <= 4) {
     receivedDamege(player, enemy.damage);
 
     var imageEnemy = document.querySelector(`#${enemy.divInfos.imageId}`);
     imageEnemy.classList.add("inimigoAtacando");
     await new Promise((resolve) => setTimeout(resolve, 1500));
     imageEnemy.classList.remove("inimigoAtacando");
-  } else if (actionIndex >= 8) {
-    healthLife(enemy);
   } else {
     defend(enemy);
   }
@@ -211,14 +221,17 @@ async function runRoundEnemy() {
 //--------------------------------------------------------------------------------------------------
 
 async function action(action) {
-  console.log(roundEnemy);
   await action();
   refreshGame();
+
+  refreshRounds();
 
   await runRoundEnemy();
   refreshGame();
 
   refreshRounds();
+  roundEnemy++;
+  round++;
   await new Promise((resolve) => setTimeout(resolve, 2000));
 }
 
@@ -238,22 +251,44 @@ const lifeDiv = document.querySelector("#life");
 const defendDiv = document.querySelector("#defend");
 const roundDiv = document.querySelector("#round");
 const especialDiv = document.querySelector("#especial");
+const curasDiv = document.querySelector("#curas");
 
 const jogadorDiv = document.querySelector("#jogador");
+const jogadorDefesaDiv = document.querySelector("#defendingPlayer");
+const jogadorCuraDiv = document.querySelector("#healthPlayer");
+const jogadorEspecialDiv = document.querySelector("#especialPlayer");
+const jogadorAtaqueDiv = document.querySelector("#attackPlayer");
+
 const enemysDiv = document.querySelector("#inimigos");
 
 function refreshStatusEnemys() {
   enemysDiv.innerHTML = "";
   entitys.forEach((entity) => {
-    enemysDiv.innerHTML += `
-              <div class="inimigo">
-              ${entity.defending ? "<img src='../assets/shild.png'>" : ""}
-              <img
-                  src="${entity.divInfos.image}"
-                  id="${entity.divInfos.imageId}"
-                  />
-                <div>${entity.life}</div>
-              </div>`;
+    if(entity.death){
+      enemysDiv.innerHTML += `
+      <div class="inimigo">
+        <img src="../../assets/lapide.png">
+      </div>
+      `;
+    }else{
+      enemysDiv.innerHTML += `
+      <div class="inimigo">
+        ${
+          entity.defending
+            ? "<img class='escudo_inimigo' src='../../assets/shild.png'>"
+            : ""
+        }
+        <img
+          src="${entity.divInfos.image}"
+          id="${entity.divInfos.imageId}"
+          class="imagem_inimigo"
+        />
+        <div class="vida_inimigo">
+        <span>${entity.life}</span>
+        </div>
+      </div>
+      `;
+    }
   });
 }
 
@@ -262,12 +297,16 @@ function refreseStatusPlayer() {
   defendDiv.innerHTML = player.defending ? "Defendendo" : "Exposto";
   roundDiv.innerHTML = round;
   especialDiv.innerHTML = player.especial.usage;
+  curasDiv.innerHTML = player.health.usage;
+
+  if (player.defending) {
+    jogadorDefesaDiv.classList.remove("hide");
+  } else {
+    jogadorDefesaDiv.classList.add("hide");
+  }
 }
 
 function refreshRounds() {
-  round++;
-  roundEnemy++;
-
   var countEnemysLifes = entitys.filter((entity) => !entity.death).length;
   if (roundEnemy >= countEnemysLifes) {
     roundEnemy = 0;
@@ -277,7 +316,7 @@ function refreshRounds() {
 function verifyLifes() {
   if (player.life <= 0) {
     window.alert("Voce morreu");
-    location.reload();
+    window.location.href = "../../index.html";
   }
 
   var entitysDeath = entitys.filter((entity) => entity.life <= 0);
@@ -287,7 +326,7 @@ function verifyLifes() {
   });
   if (entitysDeath.length === entitys.length) {
     window.alert("Voce ganhou");
-    window.location.href = "../index.html";
+    window.location.href = "../level5/level5.html";
   }
 }
 
@@ -296,13 +335,30 @@ function verifyLifes() {
 refreseStatusPlayer();
 refreshStatusEnemys();
 
-async function teste() {
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveEspecial);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-}
+async function a(){
+  await action(() => healthLife(player));
+  await action(() => healthLife(player));
+  await action(() => healthLife(player));
+  await action(() => giveEspecial(player));
+  await action(() => giveEspecial(player));
+  await action(() => giveEspecial(player));
 
-teste();
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+  await action(giveDamege);
+
+}
+a()
