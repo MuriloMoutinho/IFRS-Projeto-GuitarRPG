@@ -334,31 +334,3 @@ function verifyLifes() {
 
 refreseStatusPlayer();
 refreshStatusEnemys();
-
-async function a(){
-  await action(() => healthLife(player));
-  await action(() => healthLife(player));
-  await action(() => healthLife(player));
-  await action(() => giveEspecial(player));
-  await action(() => giveEspecial(player));
-  await action(() => giveEspecial(player));
-
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-  await action(giveDamege);
-
-}
-a()
