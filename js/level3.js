@@ -1,4 +1,4 @@
-    const URL = "https://teachablemachine.withgoogle.com/models/dF9XOLpF6/";
+const URL = "https://teachablemachine.withgoogle.com/models/NGhcnziL-/";
 
 const buttonInit = document.querySelector("#button-init");
 
@@ -41,7 +41,7 @@ async function predict() {
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
     if (
-      prediction[i].className === "Class 1" &&
+      prediction[i].className === "cura" &&
       prediction[i].probability.toFixed(2) == 1
     ) {
       if (player.health.usage === 0) {
@@ -50,17 +50,17 @@ async function predict() {
         await action(() => healthLife(player));
       }
     } else if (
-      prediction[i].className === "Class 2" &&
+      prediction[i].className === "defesa" &&
       prediction[i].probability.toFixed(2) == 1
     ) {
       await action(() => defend(player));
     } else if (
-      prediction[i].className === "Class 3" &&
+      prediction[i].className === "ataque" &&
       prediction[i].probability.toFixed(2) == 1
     ) {
       await action(giveDamege);
     } else if (
-      prediction[i].className === "Class 4" &&
+      prediction[i].className === "especial" &&
       prediction[i].probability.toFixed(2) == 1
     ) {
       if (player.especial.usage === 0) {
