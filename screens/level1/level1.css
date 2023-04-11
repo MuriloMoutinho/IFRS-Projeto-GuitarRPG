@@ -74,9 +74,9 @@
   height: 25em;
 
   position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   display: flex;
   align-items: center;
@@ -122,7 +122,8 @@ transform: translate(-50%, -50%);
   width: 50px;
 }
 .inimigos {
-  width: 40em;
+  max-width: 50em;
+
   height: 25em;
   display: flex;
   flex-direction: row;
@@ -213,7 +214,7 @@ transform: translate(-50%, -50%);
   right: -20em;
   transform: translateY(-50%);
 }
-.attackPlayer{
+.attackPlayer {
   width: 10em;
   position: absolute;
   top: 50%;
