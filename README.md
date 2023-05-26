@@ -11,6 +11,6 @@ Mystic Maze é um jogo estilo RPG inspirado em Final Fantasy, Shin Megami Tensei
 
 ## Feito por:
 - Murilo Moutinho da Silva (Programção HTML, JavaScript)
-- [Marcelo Schneider Dalcin]([https://exemplo.com/](https://github.com/marselosd) (Level Desing)
+- [Marcelo Schneider Dalcin](https://github.com/marselosd) (Level Desing)
 - [Jean Lucas Hoffelder](https://github.com/jeanHoffelder) (Treinamento da IA)
 - [Fábio Júnior Nielsson Bastian](https://github.com/FabioBastian) (Desing e Css)
